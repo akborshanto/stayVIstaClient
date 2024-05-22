@@ -16,7 +16,7 @@ const queryClient = new QueryClient()
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <QueryClientProvider client={queryClient}>
-  
+  <Toaster></Toaster>
   <HelmetProvider>
   <AuthProvider>
     <RouterProvider router={router} />

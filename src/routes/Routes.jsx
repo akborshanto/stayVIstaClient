@@ -5,6 +5,7 @@ import Login from '../pages/Login/Login'
 import SignUp from '../pages/SignUp/SignUp'
 import RoomDetails from '../pages/RoomDetails/RoomDetails'
 import { createBrowserRouter } from 'react-router-dom'
+import PrivateRoute from './PrivateRoute';
 
 export const router = createBrowserRouter([
   {
@@ -18,7 +19,12 @@ export const router = createBrowserRouter([
       },
       {
         path: '/room/:id',
-        element: <RoomDetails />,
+        element: 
+<PrivateRoute>
+        
+<RoomDetails />
+</PrivateRoute>
+,
       },
     ],
   },

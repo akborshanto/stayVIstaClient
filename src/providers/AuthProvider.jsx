@@ -20,7 +20,7 @@ const googleProvider = new GoogleAuthProvider()
 const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null)
   const [loading, setLoading] = useState(true)
-
+console.log(user)
   const createUser = (email, password) => {
     setLoading(true)
     return createUserWithEmailAndPassword(auth, email, password)
@@ -43,9 +43,9 @@ const AuthProvider = ({ children }) => {
 
   const logOut = async () => {
     setLoading(true)
-    await axios.get(`${import.meta.env.VITE_API_URL}/logout`, {
-      withCredentials: true,
-    })
+    // await axios.get(`${import.meta.env.VITE_API_URL}/logout`, {
+    //   withCredentials: true,
+    // })
     return signOut(auth)
   }
 
@@ -55,6 +55,7 @@ const AuthProvider = ({ children }) => {
       photoURL: photo,
     })
   }
+  
   // Get token from server
   const getToken = async email => {
     const { data } = await axios.post(
