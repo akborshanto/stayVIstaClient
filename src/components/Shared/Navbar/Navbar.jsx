@@ -1,7 +1,7 @@
 import Container from "../Container";
 import { AiOutlineMenu } from "react-icons/ai";
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 
 import avatarImg from "../../../assets/images/placeholder.jpg";
 import useAuth from "../../../hooks/useAuth";
@@ -79,6 +79,9 @@ console.log(user,logOut)
                       <>
                         <div onClick={logOuts} className="px-4 py-3 hover:bg-neutral-100 transition font-semibold cursor-pointer" >
                           Logout
+                        </div>
+                        <div className="px-4 py-3 hover:bg-neutral-100 transition font-semibold cursor-pointer" >
+                      <NavLink to='dashboard'>DASHBOARD</NavLink>
                         </div>
                       </>
                     ) : (

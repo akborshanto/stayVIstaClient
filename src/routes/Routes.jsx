@@ -6,6 +6,11 @@ import SignUp from '../pages/SignUp/SignUp'
 import RoomDetails from '../pages/RoomDetails/RoomDetails'
 import { createBrowserRouter } from 'react-router-dom'
 import PrivateRoute from './PrivateRoute';
+import { element } from 'prop-types'
+import DashboardLayout from '../layouts/DashboardLayout'
+import Statistics from '../pages/Dashboard/common/Statistics'
+import AddRoom from '../pages/Dashboard/host/AddROom'
+import MyListings from '../pages/Dashboard/host/MyListings'
 
 export const router = createBrowserRouter([
   {
@@ -30,4 +35,32 @@ export const router = createBrowserRouter([
   },
   { path: '/login', element: <Login /> },
   { path: '/signup', element: <SignUp /> },
+/* dashboard */
+{
+  path:'/dashboard',
+  element:<DashboardLayout></DashboardLayout>,
+/* dashboard childrem */
+children:[
+
+/* statsics */
+{
+  index:true,
+  element:<Statistics></Statistics>
+},
+{
+  path:'add-room',
+  element:<AddRoom></AddRoom>
+},
+{
+  path:'my-listings',
+  element:<MyListings></MyListings>
+}
+
+
+
+]
+
+}
+
+
 ])
