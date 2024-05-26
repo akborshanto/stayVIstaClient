@@ -1,26 +1,16 @@
 import { useState } from 'react';
 import { categories } from '../Categories/CategoriesData'
 import { Calendar, DateRange } from 'react-date-range';
-const AddRoomForm = () => {
-//const [date,setDate]=useState()
-    const [dates, setDates] = useState([
-        {
-            startDate: new Date(),
-            endDate: null,
-            key: 'selection'
-          }
-    ]); 
-
-    /* date rangle */
-
-    const handleDate=(range)=>{
+import { TbFidgetSpinner } from 'react-icons/tb';
+const AddRoomForm = ({dates,handleDate,handleSubmit,handlePreviewImage,file,loading}) => {
 
 
-        setDates(range.selection)
-    }
+
   return (
     <div className='w-full min-h-[calc(100vh-40px)] flex flex-col justify-center items-center text-gray-800 rounded-xl bg-gray-50'>
-      <form>
+
+
+      <form onSubmit={handleSubmit}>
         <div className='grid grid-cols-1 lg:grid-cols-2 gap-10'>
           <div className='space-y-6'>
             <div className='space-y-1 text-sm'>
@@ -60,10 +50,10 @@ const AddRoomForm = () => {
               </label>
               <DateRange
               editableDateInputs={true}
-              rangeColors={['#fb5200']}
-              onChange={item => setDates([item.selection])}
+
+              onChange={item => handleDate(item)}
               moveRangeOnFirstSelection={false}
-              ranges={dates}
+              ranges={[dates]}
             />
             </div>
           </div>
@@ -85,18 +75,23 @@ const AddRoomForm = () => {
             <div className=' p-4 bg-white w-full  m-auto rounded-lg'>
               <div className='file_upload px-5 py-3 relative border-4 border-dotted border-gray-300 rounded-lg'>
                 <div className='flex flex-col w-max mx-auto text-center'>
+           
+
                   <label>
                     <input
                       className='text-sm cursor-pointer w-36 hidden'
                       type='file'
+                      onChange={handlePreviewImage}
                       name='image'
                       id='image'
                       accept='image/*'
                       hidden
                     />
                     <div className='bg-rose-500 text-white border border-gray-300 rounded font-semibold cursor-pointer p-1 px-3 hover:bg-rose-500'>
-                      Upload Image
+
+                    Upload Image
                     </div>
+                    <img src={file} alt="" className='w-20 rounded-full'/>
                   </label>
                 </div>
               </div>
@@ -176,11 +171,17 @@ const AddRoomForm = () => {
         </div>
 
         <button
+        disabled={loading}
           type='submit'
           className='w-full p-3 mt-5 text-center font-medium text-white transition duration-200 rounded shadow-md bg-rose-500'
         >
-          Save & Continue
-        </button>
+
+        {
+
+          loading? <TbFidgetSpinner className=' animate-spin'></TbFidgetSpinner>:
+       "   Save & Continue"
+       
+        } </button>
       </form>
     </div>
   )

@@ -2,59 +2,51 @@ import { Link, useNavigate } from "react-router-dom";
 import { FcGoogle } from "react-icons/fc";
 import useAuth from "../../hooks/useAuth";
 import axios from "axios";
+import { uploadImage } from "../../utils";
+//import { uploadImage } from "../../utils";
+
+//image hoisting key
+//const image_Hoistin_Key=import.meta.env.VITE_IMGBB_API_URL;
+//const image_API=`https://api.imgbb.com/1/upload?key=${image_Hoistin_Key}`
 
 const SignUp = () => {
   const navigate = useNavigate();
-  const { createUser, updateUserProfile, loading,signInWithGoogle } = useAuth();
+  const { createUser, updateUserProfile, loading, signInWithGoogle } =
+    useAuth();
 
-  const handleSubmit =async (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const form = e.target;
     const name = form.name.value;
     const password = form.password.value;
     const email = form.email.value;
-    console.log(email, password);
-    const image = form.image.files[0];
-    //console.log(name,password,email,files)
-    const formData = new FormData();
+    //console.log(email, password);
+    const image = form.image.files[0]
 
-    formData.append("image", image);
-    console.log(formData);
-    /* try catch */
 
-    //   upload image *
-    const { data } =await axios.post(
-      `https://api.imgbb.com/1/upload?key=${
-        import.meta.env.VITE_IMGBB_API_URL
-      }`,
-      formData
-    );
-
-    /* register  */
-
-const result= await createUser(email,password)
-
-navigate("/")
-/* save user name and psho */
-
-await updateUserProfile(name,data.data.display_url)
-
-navigate("/")
-      // console.log(data.data.display_url);
+    try {
     
+      /* ============================== */
+////const uploadImg= await uploadImage(image)
+const imgageUp= await uploadImage(image)
+      const result = await createUser(email, password);
+
+      navigate("/");
+      /* save user name and psho */
+
+      await updateUserProfile(name, imgageUp);
+
+      navigate("/");
+      // console.log(data.data.display_url);
+    } catch (err) {}
   };
 
-
   /* sign in  with signInWithGoogle */
-  const signInWithGoogles=()=>{
-
-    signInWithGoogle()
-    .then(res=>{
-
-      navigate('/')
-    })
-
-  }
+  const signInWithGoogles = () => {
+    signInWithGoogle().then((res) => {
+      navigate("/");
+    });
+  };
   return (
     <div className="flex justify-center items-center min-h-screen">
       <div className="flex flex-col max-w-md p-6 rounded-md sm:p-10 bg-gray-100 text-gray-900">
@@ -143,7 +135,7 @@ navigate("/")
           <div className="flex-1 h-px sm:w-16 dark:bg-gray-700"></div>
         </div>
         <div className="flex justify-center items-center space-x-2 border m-3 p-2 border-gray-300 border-rounded cursor-pointer">
-          <FcGoogle size={32}  onClick={signInWithGoogles}/>
+          <FcGoogle size={32} onClick={signInWithGoogles} />
 
           <p>Continue with Google</p>
         </div>
