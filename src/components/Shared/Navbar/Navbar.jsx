@@ -5,17 +5,56 @@ import { Link, NavLink } from "react-router-dom";
 
 import avatarImg from "../../../assets/images/placeholder.jpg";
 import useAuth from "../../../hooks/useAuth";
+import HostModal from "../../Modal/hostModal/HostRequestModal";
+import useAxiosSecure from "../../../hooks/useAxiosSecure";
+import { toast } from "react-hot-toast";
 
 const Navbar = () => {
-  const {user,logOut}= useAuth();
-console.log(user,logOut)
+  const { user, logOut } = useAuth();
+  const axiosSecure = useAxiosSecure();
+  // console.log(user, logOut);
   const [isOpen, setIsOpen] = useState(false);
 
-  /* logout */
-  const logOuts=()=>{
+  /* modal  */
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
+  /* modal handleaer */
 
-    logOut()
-  }
+  const hanleModal = async () => {
+    /* current user */
+    const currentUser = {
+      email: user?.email,
+
+      role: "guest", //role,foreward,preamble,intruduction
+      status: "Requested",
+    };
+
+    /* user axios */
+
+    try {
+      const { data } = await axiosSecure.put("/user", currentUser);
+
+      if (data.modifiedCount > 0) {
+        toast.success("succeffully hosted");
+        console.log(data)
+      } else {
+        toast.success("please wait for Admin approval");
+      }
+    } catch (err) {
+      console.log(err);
+    } finally {
+      closeModal();
+    }
+
+    console.log("handle  mdodal");
+  };
+
+  /* logout */
+  const logOuts = () => {
+    logOut();
+  };
 
   return (
     <div className="fixed w-full bg-white z-10 shadow-sm">
@@ -37,15 +76,22 @@ console.log(user,logOut)
               <div className="flex flex-row items-center gap-3">
                 {/* Become A Host btn */}
                 <div className="hidden md:block">
-                  {!user && (
-                    <button
-                      disabled={!user}
-                      className="disabled:cursor-not-allowed cursor-pointer hover:bg-neutral-100 py-3 px-4 text-sm font-semibold rounded-full  transition"
-                    >
-                      Host your home
-                    </button>
-                  )}
+                  {/*    {!user && ( */}
+                  <button
+                    onClick={() => setIsModalOpen(true)}
+                    // disabled={!user}
+                    className="disabled:cursor-not-allowed cursor-pointer hover:bg-neutral-100 py-3 px-4 text-sm font-semibold rounded-full  transition"
+                  >
+                    Host your home
+                  </button>
+                  {/*     )} */}
                 </div>
+                {/* MODLA */}
+                <HostModal
+                  isOpen={isModalOpen}
+                  closeModal={closeModal}
+                  hanleModal={hanleModal}
+                ></HostModal>
                 {/* Dropdown btn */}
                 <div
                   onClick={() => setIsOpen(!isOpen)}
@@ -77,11 +123,14 @@ console.log(user,logOut)
 
                     {user ? (
                       <>
-                        <div onClick={logOuts} className="px-4 py-3 hover:bg-neutral-100 transition font-semibold cursor-pointer" >
+                        <div
+                          onClick={logOuts}
+                          className="px-4 py-3 hover:bg-neutral-100 transition font-semibold cursor-pointer"
+                        >
                           Logout
                         </div>
-                        <div className="px-4 py-3 hover:bg-neutral-100 transition font-semibold cursor-pointer" >
-                      <NavLink to='dashboard'>DASHBOARD</NavLink>
+                        <div className="px-4 py-3 hover:bg-neutral-100 transition font-semibold cursor-pointer">
+                          <NavLink to="dashboard">DASHBOARD</NavLink>
                         </div>
                       </>
                     ) : (
