@@ -57,14 +57,14 @@ const AuthProvider = ({ children }) => {
   };
 
   // Get token from server
-  const getToken = async (email) => {
-    const { data } = await axios.post(
-      `${import.meta.env.VITE_API_URL}/jwt`,
-      { email },
-      { withCredentials: true }
-    );
-    return data;
-  };
+  // const getToken = async (email) => {
+  //   const { data } = await axios.post(
+  //     `${import.meta.env.VITE_API_URL}/jwt`,
+  //     { email },
+  //     { withCredentials: true }
+  //   );
+  //   return data;
+  // };
 
   /* save  user information set in userCollectionc db */
   const saveUser = async (user) => {
@@ -89,7 +89,7 @@ const AuthProvider = ({ children }) => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       setUser(currentUser);
       if (currentUser) {
-        getToken(currentUser.email);
+//getToken(currentUser.email);
         saveUser(currentUser)
       }
       setLoading(false);

@@ -4,7 +4,7 @@ import { DateRange } from 'react-date-range';
 import { useState } from 'react';
 import { differenceInCalendarDays } from 'date-fns';
 const RoomReservation = ({ room }) => {
-console.log(room.from,room.to)
+// console.log(room.from,room.to)
 
 
   const [state, setState] = useState([
@@ -21,7 +21,7 @@ const totalDate=parseInt(
   ) * room?.price
 
 
-console.log(totalDate)
+//console.log(totalDate)
   return (
     <div className='rounded-xl border-[1px] border-neutral-200 overflow-hidden bg-white'>
     

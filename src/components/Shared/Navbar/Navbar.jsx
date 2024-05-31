@@ -38,7 +38,7 @@ const Navbar = () => {
 
       if (data.modifiedCount > 0) {
         toast.success("succeffully hosted");
-        console.log(data)
+        console.log(data);
       } else {
         toast.success("please wait for Admin approval");
       }
@@ -48,7 +48,7 @@ const Navbar = () => {
       closeModal();
     }
 
-    console.log("handle  mdodal");
+
   };
 
   /* logout */
